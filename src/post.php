@@ -1,7 +1,9 @@
 <?php
+require_once __DIR__ . '/preflight.php';
+
 $input = json_decode(file_get_contents('php://input'), true) ?? [];
 
-function inputContact(array $input, mysqli $database): void {
+function inputContact(array $input): void {
     if (
         empty($input['name']) ||
         empty($input['email']) ||
@@ -31,7 +33,7 @@ function inputContact(array $input, mysqli $database): void {
     ]);
 }
 
-function inputNewsletter(array $input, mysqli $database): void {
+function inputNewsletter(array $input): void {
     if (
         empty($input['email']) ||
         empty($input['isSubscribed'])
@@ -59,3 +61,17 @@ function inputNewsletter(array $input, mysqli $database): void {
         'message' => 'Mail enregistré à la newsletter'
     ]);
 }
+
+if (!empty($input['message'])) {
+    inputContact($input);
+    exit;
+}
+
+if (isset($input['isSubscribed'])) {
+    inputNewsletter($input);
+    exit;
+}
+
+http_response_code(400);
+echo json_encode(['error' => 'Type de requete POST inconnu']);
+exit;

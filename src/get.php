@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/preflight.php';
+
 $database = new mysqli("db", "burger_api_user", "root", "burger_api");
 //
 if ($database->connect_error) {
