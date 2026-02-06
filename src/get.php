@@ -12,7 +12,6 @@ if ($database->connect_error) {
 
 
 $header = $_GET['get'] ?? '';
-
 switch ($header) {
     case 'header':
         $sql = "SELECT id, sousTitre, photoURL, libelle_lien, href_lien FROM articles WHERE id = 1";
@@ -52,6 +51,12 @@ switch ($header) {
     case 'newsletter':
         $sql = "SELECT id, titre, contenu FROM articles WHERE id = 8";
         $result = $database->execute_query($sql)->fetch_assoc();
+        echo json_encode($result);
+        break;
+
+case 'category':
+        $sql = "SELECT * FROM categorie";
+        $result = $database->execute_query($sql)->fetch_all(MYSQLI_ASSOC);
         echo json_encode($result);
         break;
 
