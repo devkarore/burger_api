@@ -54,7 +54,7 @@ switch ($header) {
         echo json_encode($result);
         break;
 
-case 'category':
+    case 'category':
         $sql = "SELECT * FROM categorie";
         $result = $database->execute_query($sql)->fetch_all(MYSQLI_ASSOC);
         echo json_encode($result);
